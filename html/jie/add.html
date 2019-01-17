@@ -213,15 +213,20 @@
                 ,field:'smfile'
                 ,size: 20000
                 ,type:'post'
+                ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                    layer.load(); //上传loading
+                }
                 ,done: function(res){
                     //上传完毕回调
                     console.log(JSON.stringify(res));
                     if(res.code=='success'){
                         vm.formData.picList.push({content:res.data.url})
                     }
+                    layer.closeAll('loading'); //关闭loading
                 }
                 ,error: function(){
                     //请求异常回调
+                    layer.closeAll('loading'); //关闭loading
                 }
             });
 
