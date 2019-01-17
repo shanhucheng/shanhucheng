@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>发帖-山湖城社区</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="山湖城,东莞,大岭山,同沙生态公园">
+    <meta name="description" content="和谐社区，你我共建">
+  <link rel="stylesheet" href="../../res/layui/css/layui.css">
+  <link rel="stylesheet" href="../../res/css/global.css">
+</head>
+<body>
+<div id="app">
+<div class="fly-header layui-bg-black" >
+  <div class="layui-container">
+    <a class="fly-logo" href="../../index.html">
+      <img src="../../res/images/logo.png" alt="layui">
+    </a>
+    <ul class="layui-nav fly-nav layui-hide-xs">
+
+    </ul>
+    
+    <ul class="layui-nav fly-nav-user">
+      
+      <!-- 未登入的状态 -->
+      <!--
+      <li class="layui-nav-item">
+        <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="user/login.html">登入</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="user/reg.html">注册</a>
+      </li>
+      <li class="layui-nav-item layui-hide-xs">
+        <a href="/app/qq/" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" title="QQ登入" class="iconfont icon-qq"></a>
+      </li>
+      <li class="layui-nav-item layui-hide-xs">
+        <a href="/app/weibo/" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" title="微博登入" class="iconfont icon-weibo"></a>
+      </li>
+       -->
+      
+      <!-- 登入后的状态 -->
+
+    </ul>
+  </div>
+</div>
+
+<div class="layui-container fly-marginTop">
+  <div class="fly-panel" pad20 style="padding-top: 5px;">
+    <!--<div class="fly-none">没有权限</div>-->
+    <div class="layui-form layui-form-pane">
+      <div class="layui-tab layui-tab-brief" lay-filter="user">
+        <ul class="layui-tab-title">
+          <li class="layui-this">发表新帖<!-- 编辑帖子 --></li>
+        </ul>
+        <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
+          <div class="layui-tab-item layui-show">
+            <form action="">
+              <div class="layui-row layui-col-space15 layui-form-item">
+                <div class="layui-col-md3">
+                  <label class="layui-form-label">所在专栏</label>
+                  <div class="layui-input-block">
+                    <select lay-verify="required" v-model="formData.communityInfo.type"    lay-filter="type" >
+                      <option></option>
+                      <option value="share">分享</option>
+                      <option value="ask">提问</option>
+                    </select>
+                  </div>
+                </div>
+
+
+                <div class="layui-col-md3">
+                  <label class="layui-form-label">标签</label>
+                  <div class="layui-input-block">
+                    <select lay-verify="required"  v-model="formData.communityInfo.tagType"   lay-filter="tagType">
+                      <option></option>
+                      <option v-bind:value="tag.value" v-for="tag in tagList"> {{tag.name}}</option>
+                    </select>
+                  </div>
+                </div>
+
+
+                <div class="layui-col-md3">
+                  <label class="layui-form-label">所属楼栋</label>
+                  <div class="layui-input-block">
+                    <select lay-verify="required" v-model="formData.building"   lay-filter="building">
+                      <option></option>
+                      <option v-bind:value="tag" v-model="formData.building"  v-for="tag in 16"> {{tag}}栋</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="layui-col-md3">
+                  <label class="layui-form-label">所属单元</label>
+                  <div class="layui-input-block">
+                    <select lay-verify="required" v-model="formData.entrance"    lay-filter="entrance">
+                      <option></option>
+                      <option v-bind:value="tag" v-for="tag in 2"> {{tag}}单元</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="layui-col-md3">
+                  <label class="layui-form-label">所属楼层</label>
+                  <div class="layui-input-block">
+                    <select lay-verify="required" v-model="formData.floor"   lay-filter="floor">
+                      <option></option>
+                      <option v-bind:value="tag" v-for="tag in 34"> {{tag}}楼</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="layui-col-md3">
+                  <label class="layui-form-label">房间号</label>
+                  <div class="layui-input-block">
+                    <select lay-verify="required" v-model="formData.no"    lay-filter="no">
+                      <option></option>
+                      <option v-bind:value="'0'+tag" v-for="tag in 4"> 0{{tag}}</option>
+                    </select>
+                  </div>
+                </div>
+
+
+                <div class="layui-col-md9">
+                  <label for="L_title" class="layui-form-label">标题</label>
+                  <div class="layui-input-block">
+                    <input type="text" id="L_title" v-model="formData.communityInfo.title"   required lay-verify="required" autocomplete="off" class="layui-input">
+                    <!-- <input type="hidden" name="id" value="{{d.edit.id}}"> -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="layui-form-item layui-form-text">
+                <div class="layui-input-block">
+                 <!-- <textarea id="L_content" v-model="formData.communityInfo.content"   required lay-verify="required" placeholder="详细描述" class="layui-textarea fly-editor" style="height: 260px;"></textarea>
+-->
+                  <textarea id="demo"  v-model="formData.communityInfo.content"  style="display: none;"></textarea>
+                </div>
+              </div>
+                <div class="layui-form-item layui-form-text">
+                    <div class="layui-input-block">
+                    <img v-bind:src="img.content" v-for="img in formData.picList" style="width: 30%">
+                        <span type="button" class="layui-btn " id="test1">
+                        <i class="layui-icon">&#xe67c;</i>上传图片
+                    </span>
+                    </div>
+
+
+                </div>
+
+              <div class="layui-form-item">
+                <button class="layui-btn" lay-filter="demo1" lay-submit>立即发布</button>
+              </div>
+            </form>
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="fly-footer">
+    <p><a href="http://topic.shanhucheng.cn/" target="_blank">山湖城社区</a> 2019 &copy; <a href="http://www.shanhucheng.cn/" target="_blank">shanhucheng.cn 出品</a></p>
+
+  </div>
+</div>
+</div>
+
+<script src="../../res/layui/layui.js"></script>
+
+
+
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- 生产环境版本，优化了尺寸和速度 -->
+<!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
+<script src="../../js/common.js"></script>
+<script>
+
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            topicList: [],
+            tagList:tagList,
+            buildingInfo:{},
+            formData:{communityInfo:{}, picList:[]},
+
+        }
+    })
+
+
+    layui.use(['jquery'], function(){
+        let   $= layui.jquery;
+
+        $('#fixBar01').hide();
+
+
+        layui.use(['upload','form','layedit'], function(){
+
+            let form = layui.form;
+            let layedit = layui.layedit;
+            let upload = layui.upload;
+
+
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#test1' //绑定元素
+                ,url: 'https://sm.ms/api/upload?inajax=1&ssl=1' //上传接口
+                ,field:'smfile'
+                ,size: 20000
+                ,type:'post'
+                ,done: function(res){
+                    //上传完毕回调
+                    console.log(JSON.stringify(res));
+                    if(res.code=='success'){
+                        vm.formData.picList.push({content:res.data.url})
+                    }
+                }
+                ,error: function(){
+                    //请求异常回调
+                }
+            });
+
+            let editIndex= layedit.build('demo',{ tool: ['left', 'center', 'right', '|', 'face']}); //建立编辑器
+
+
+
+
+            form.on('select(type)', function(data){  vm.formData.communityInfo.type=data.value;});
+            form.on('select(tagType)', function(data){  vm.formData.communityInfo.tagType=data.value;});
+            form.on('select(building)', function(data){  vm.formData.building=data.value;});
+            form.on('select(entrance)', function(data){  vm.formData.entrance=data.value;});
+            form.on('select(floor)', function(data){  vm.formData.floor=data.value;});
+            form.on('select(no)', function(data){  vm.formData.no=data.value;});
+
+
+
+            //监听提交
+            form.on('submit(demo1)', function(data){
+                // layer.alert(JSON.stringify(data.field), {
+                //     title: '最终的提交信息'
+                // });
+
+                vm.formData.communityInfo.content= layedit.getContent(editIndex);
+                console.log(JSON.stringify(vm.formData));
+
+                $.ajax({
+                    url: apiPath+"/info/save",
+                    type:'post',
+                    data:JSON.stringify(vm.formData),
+                    contentType: "application/json; charset=utf-8",
+                    cache: false,
+                    success: function(response){
+
+                        if(response.code==0){
+                            window.location.href='../../index.html';
+                        }
+
+                    }
+                });
+
+                return false;
+            });
+
+
+        });
+
+
+    });
+
+
+
+
+
+
+</script>
+
+<script>
+    layui.cache.page = 'jie';
+    layui.cache.user = {
+        username: '游客'
+        ,uid: -1
+        ,avatar: '../../res/images/avatar/00.jpg'
+        ,experience: 83
+        ,sex: '男'
+    };
+    layui.config({
+        version: "3.0.0"
+        ,base: '../../res/mods/'
+    }).extend({
+        fly: 'index'
+    }).use('fly');
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title id="title">山湖城</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="keywords" content="山湖城,东莞,大岭山,同沙生态公园">
+  <meta name="description" content="和谐社区，你我共建">
+  <link rel="stylesheet" href="../../res/layui/css/layui.css">
+  <link rel="stylesheet" href="../../res/css/global.css">
+</head>
+<body>
+
+<div id="app">
+    <div class="fly-header layui-bg-black">
+      <div class="layui-container">
+        <a class="fly-logo" href="../../index.html">
+          <img src="../../res/images/logo.png">
+        </a>
+
+
+        <ul class="layui-nav fly-nav-user">
+
+          <!-- 未登入的状态 -->
+          <!--
+          <li class="layui-nav-item">
+            <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>
+          </li>
+          <li class="layui-nav-item">
+            <a href="user/login.html">登入</a>
+          </li>
+          <li class="layui-nav-item">
+            <a href="user/reg.html">注册</a>
+          </li>
+          <li class="layui-nav-item layui-hide-xs">
+            <a href="/app/qq/" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" title="QQ登入" class="iconfont icon-qq"></a>
+          </li>
+          <li class="layui-nav-item layui-hide-xs">
+            <a href="/app/weibo/" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" title="微博登入" class="iconfont icon-weibo"></a>
+          </li>
+           -->
+
+          <!-- 登入后的状态 -->
+
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="layui-container">
+      <div class="layui-row layui-col-space15">
+        <div class="layui-col-md8 content detail">
+          <div class="fly-panel detail-box">
+            <h1>{{detail.title}}</h1>
+
+            <div class="detail-about">
+              <a class="fly-avatar" href="../user/home.html">
+                <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546167126015&di=5a94b6e03bd95f9f9e7762115b87d3e4&imgtype=0&src=http%3A%2F%2Fpic.90sjimg.com%2Fdesign%2F00%2F67%2F59%2F63%2F58e89bee922a2.png">
+              </a>
+              <div class="fly-detail-user">
+                <a href="#" class="fly-link">
+                  <cite>{{detail.buildingInfo}}</cite>
+
+                </a>
+                <span>{{detail.createTime|formatDate}}</span>
+              </div>
+
+            </div>
+            <div class="detail-body photos" >
+
+              <div v-html="detail.content"></div>
+
+              <p>
+                <img v-bind:src="img.content" v-for="img in detail.picList">
+              </p>
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+
+</div>
+
+<script src="../../res/layui/layui.js"></script>
+<script>
+    layui.cache.page = 'jie';
+    layui.cache.user = {
+        username: '游客'
+        ,uid: -1
+        ,avatar: '../../res/images/avatar/00.jpg'
+        ,experience: 83
+        ,sex: '男'
+    };
+    layui.config({
+        version: "3.0.0"
+        ,base: '../../res/mods/'
+    }).extend({
+        fly: 'index'
+    }).use(['fly', 'face'], function(){
+        var $ = layui.$
+            ,fly = layui.fly;
+        //如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+        /*
+        $('.detail-body').each(function(){
+          var othis = $(this), html = othis.html();
+          othis.html(fly.content(html));
+        });
+        */
+    });
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<script src="../../js/common.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+           detail:{
+               picList:[]
+           }
+
+        },
+        filters:{
+
+            formatDate:function(item){
+
+                let date=new Date(item)
+                let fmt='yyyy-MM-dd hh:mm:ss';
+                var o = {
+                    "M+" : date.getMonth()+1,                 //月份
+                    "d+" : date.getDate(),                    //日
+                    "h+" : date.getHours(),                   //小时
+                    "m+" : date.getMinutes(),                 //分
+                    "s+" : date.getSeconds(),                 //秒
+                    "q+" : Math.floor((date.getMonth()+3)/3), //季度
+                    "S"  : date.getMilliseconds()             //毫秒
+                };
+                if(/(y+)/.test(fmt))
+                    fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));
+                for(var k in o)
+                    if(new RegExp("("+ k +")").test(fmt))
+                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+                return fmt;
+            }
+        }
+    })
+
+
+        layui.use(['jquery'], function(){
+            let   $= layui.jquery;
+            $.ajax({
+                url: apiPath+"/info/get/"+GetQueryString('id'),
+                type:'get',
+                contentType:'application/json',
+                cache: false,
+                success: function(response){
+                       vm.detail=response.data;
+                       $('#title').html(response.data.title);
+                }});
+
+        });
+
+</script>
+
+</body>
+</html>
