@@ -333,7 +333,6 @@ layui.config({
             cache: false,
             success: function(response){
 
-                alert(1);
                 if(response.data.content.length>0){
                     $(response.data.content).each(function (index,e) {
                         console.log(JSON.stringify(e));
