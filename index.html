@@ -332,6 +332,8 @@ layui.config({
             }),
             cache: false,
             success: function(response){
+
+                alert(1);
                 if(response.data.content.length>0){
                     $(response.data.content).each(function (index,e) {
                         console.log(JSON.stringify(e));
@@ -347,6 +349,17 @@ layui.config({
     }
 
 </script>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?b68f6f210781ffaf0c97b22b7fba654d";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
 
 
 </body>
