@@ -11,6 +11,113 @@
   <link rel="stylesheet" href="res/layui/css/layui.css">
   <link rel="stylesheet" href="res/css/global.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
+
+  <style>
+
+    .bannerBox{
+      width: 662px;
+      height: 250px;
+      position: relative;
+      margin: -10px auto 0px;
+      cursor: pointer;
+    }
+    .bannerBox:hover .left{
+      display: block;
+    }
+    .bannerBox:hover .right{
+      display: block;
+    }
+    #swiper1,#swiper2{
+      width: 662px;
+      height: 250px;
+    }
+    #swiper1{
+      filter:alpha(opacity=95);
+      -moz-opacity:0.95;
+      opacity: 0.95;
+    }
+    #swiper2{
+      position: absolute;
+      left: 0;top: 0;
+    }
+    #swiper1 .swiper-slide,#swiper1 img{
+      /*width: 662px;*/
+      /*height: 250px;*/
+      /*font-size: 100px;*/
+      /*line-height: 250px;*/
+      /*text-align: center;*/
+      /*object-fit: cover;*/
+
+      width:100%;			/* ... */
+      height:100%;		/* ... */
+      /*display:block;*/
+
+    }
+    #swiper2 .swiper-slide,#swiper2 img{
+      width: 331px;
+      height: 250px;
+      font-size: 100px;
+      line-height: 250px;
+      text-align: center;
+      object-fit: cover;
+    }
+    #swiper2 .swiper-slide{
+      overflow: hidden;
+    }
+    .direction img{
+      margin-top: 12px;
+    }
+    .left{
+      position: absolute;
+      top: 112px;
+      width: 26px;
+      height: 65px;
+      background-color: rgba(64,64,64,0.6);
+      text-align: center;
+      line-height: 65px;
+      border-bottom-right-radius: 4px;
+      border-top-right-radius: 4px;
+      z-index: 2;
+      display: none;
+    }
+    .left img{
+      width:15px ;
+      height: 28px;
+      margin-top: 18px;
+      margin-right: 3px;
+    }
+    .right{
+      position: absolute;
+      top: 112px;
+      right: 0;
+      width: 26px;
+      height: 65px;
+      background-color: rgba(64,64,64,0.6);
+      border-bottom-left-radius: 4px;
+      border-top-left-radius: 4px;
+      z-index: 2;
+      display: none;
+    }
+    .right img{
+      width:15px ;
+      height: 28px;
+      margin-top: 18px;
+      margin-left: 6px;
+    }
+    /*css3动画*/
+    #swiper2 img{
+      transition: all .4s;
+    }
+    #swiper2 img:hover{
+      -ms-transform:scale(1.1); /* IE 9 */
+      -webkit-transform: scale(1.1); /* Safari */
+      transform: scale(1.1); /* 标准语法 */
+    }
+
+
+
+  </style>
 </head>
 <body>
 <div id="app" v-cloak>
@@ -44,6 +151,59 @@
   </div>
 </div>
 
+
+<div class="bannerBox">
+    <div class="swiper-container" id="swiper1">
+      <div class="swiper-wrapper swiper-no-swiping" >
+        <div class="swiper-slide color-red">
+          <img src="https://i.loli.net/2019/01/19/5c42e4d05beea.png">
+        </div>
+        <div class="swiper-slide color-red">
+          <img src="https://i.loli.net/2019/01/19/5c42dfebef843.png">
+        </div>
+        <div class="swiper-slide color-blue">
+          <img src="https://i.loli.net/2018/11/28/5bfe7124e8580.jpg">
+        </div>
+      </div>
+    </div>
+   <!-- <div class="swiper-container" id="swiper2">
+      <div class="swiper-wrapper swiper-no-swiping">
+        <div class="swiper-slide">
+          <a href="javascript:;"><img src="img/short1.png"></a>
+        </div>
+        <div class="swiper-slide">
+          <a href="javascript:;"><img src="img/short2.png"></a>
+        </div>
+        <div class="swiper-slide">
+          <a href="javascript:;"><img src="img/short3.png"></a>
+        </div>
+        <div class="swiper-slide">
+          <a href="javascript:;"><img src="img/short4.png"></a>
+        </div>
+        <div class="swiper-slide">
+          <a href="javascript:;"><img src="img/short5.png"></a>
+        </div>
+        <div class="swiper-slide">
+          <a href="javascript:;"><img src="img/short6.png"></a>
+        </div>
+        <div class="swiper-slide">
+          <a href="javascript:;"><img src="img/short7.png"></a>
+        </div>
+        <div class="swiper-slide">
+          <a href="javascript:;"><img src="img/short8.png"></a>
+        </div>
+        <div class="swiper-slide">
+          <a href="javascript:;"><img src="img/short9.png"></a>
+        </div>
+        <div class="swiper-slide">
+          <a href="javascript:;"><img src="img/short10.png"></a>
+        </div>
+      </div>
+    </div>-->
+    <div class="left"><img src="img/bannerL.png"></div>
+    <div class="right"><img src="img/bannerR.png"></div>
+  </div>
+
 <div class="fly-panel fly-column">
   <div class="layui-container">
     <ul class="layui-clear">
@@ -71,6 +231,8 @@
 <div class="layui-container">
   <div class="layui-row layui-col-space15">
     <div class="layui-col-md8">
+
+
 
       <div class="fly-panel" style="margin-bottom: 0;">
 
@@ -267,6 +429,8 @@ layui.config({
 
 <script src="https://cdn.bootcss.com/jquery/3.3.1/core.js"></script>
 <script src="js/common.js"></script>
+
+<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
 <script>
     var app = new Vue({
         el: '#app',
@@ -305,6 +469,25 @@ layui.config({
     layui.use(['jquery'], function(){
          $ = layui.jquery;
         getPageList(1,null);
+
+        //最里层轮播
+        var mySwiper1 = new Swiper('#swiper1',{
+            loop: true,
+            autoplay : 2500,
+            speed : 600,
+            autoplayDisableOnInteraction : false
+        });
+//前进后退按钮
+        $(".left").click(function(){
+            mySwiper1.slidePrev();
+            mySwiper2.slidePrev();
+        })
+        $(".right").click(function(){
+            mySwiper1.slideNext();
+            mySwiper2.slideNext();
+        })
+
+
     });
 
     function getMorePageList() {
